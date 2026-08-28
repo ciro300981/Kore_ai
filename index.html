@@ -2,234 +2,78 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kore_ai | Phygital Automation per Ristoranti</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --accent-green: #25D366;
-            --text-main: #ffffff;
-            --text-sub: #a0a5b1;
-            --bg-color: #0e0f12;
-            --card-bg: rgba(22, 24, 29, 0.85); /* Sfondo semi-trasparente per il testo */
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0e0f12; overflow-x: hidden; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            -webkit-overflow-scrolling: touch; /* Fluidità su iOS */
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.4;
-            overflow: hidden; /* Blocca lo scorrimento verticale nativo */
-            width: 100vw;
-            height: 100vh;
-        }
-
-        /* Navigazione simulata */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(180deg, rgba(14, 15, 18, 0.95) 0%, rgba(14, 15, 18, 0) 100%);
-            z-index: 2000;
-        }
-
-        .brand-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .badge-text {
-            border: 2px solid var(--accent-green);
-            color: var(--accent-green);
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 6px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: rgba(37, 211, 102, 0.05);
-        }
-
-        /* Contenitore Reel Orizzontale */
-        .reel-container {
-            display: flex;
-            width: 400vw; /* 4 pannelli da 100vw ciascuno */
-            height: 100vh;
-            overflow-x: scroll; /* Abilita lo scorrimento orizzontale */
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory; /* Snap orizzontale obbligatorio */
-            z-index: 1000;
-        }
-
-        .reel-panel {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            position: relative;
-            scroll-snap-align: start; /* Snap all'inizio del pannello */
-            flex-shrink: 0;
-        }
-
-        .panel-content {
-            z-index: 1100;
-            max-width: 800px;
-            background: var(--card-bg);
-            border: 1px solid #262932;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-        }
-
-        .panel-num {
-            color: var(--accent-green);
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .reel-panel h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .reel-panel h2 span {
-            color: var(--accent-green);
-        }
-
-        .reel-panel p {
-            color: var(--text-sub);
-            font-size: 1rem;
-        }
-
-        /* Immagini di sfondo */
-        .panel-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Contenitore delle 3 immagini */
+        .landing-container {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 900;
-            filter: brightness(0.6);
+            max-width: 500px; /* Dimensione ottimale mobile */
+            margin: 0 auto;
+            padding-bottom: 90px; /* Spazio per evitare sovrapposizioni in basso */
         }
 
-        /* Pannello speciale per la CTA */
-        .panel-cta {
-            background-color: #121418;
-            justify-content: space-around;
+        /* Immagini trasparenti e fluide */
+        .landing-container img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        /* Pulsante fluttuante persistentemente */
-        .floating-cta {
+        /* Rendiamo la 3a immagine un unico blocco cliccabile */
+        .clickable-card {
+            display: block;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Pulsante WhatsApp Fisso Sempre Visibile in Basso */
+        .whatsapp-float {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 3000;
+            width: 90%;
+            max-width: 400px;
+            background-color: #25D366;
+            color: #000;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--accent-green);
-            color: #000000;
-            font-weight: 800;
-            font-size: 1rem;
-            padding: 16px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            white-space: nowrap;
-        }
-
-        .floating-cta:hover {
-            transform: translateX(-50%) translateY(-2px);
-            background-color: #1eaa53;
-        }
-
-        /* Nascondi barra di scorrimento su alcuni browser */
-        .reel-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        @media(min-width: 600px) {
-            .reel-panel h2 { font-size: 2.6rem; }
+            gap: 10px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-badge">
-            <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: var(--text-main);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            <span>Kore_ai</span>
-        </div>
-        <div class="badge-text">PHYGITAL AUTOMATION</div>
-    </header>
-
-    <div class="reel-container">
+    <div class="landing-container">
+        <!-- Scheda 1 -->
+        <img src="scheda1.jpg" alt="Kore_ai - Riempi i tavoli vuoti">
         
-        <div class="reel-panel">
-            <div class="panel-content">
-                <div class="panel-num">01</div>
-                <h2>Riempi i tavoli vuoti. <span>In automatico.</span></h2>
-                <p>Il sistema che fa tornare i clienti quando ti serve, senza fatica.</p>
-            </div>
-            <img src="https://lh3.googleusercontent.com/pw/AP1GczM3N8P4Y6v2mN9b7XN5J7VjN7_N7T2zN_N7v2N7-N7fN7tN7N7tN7p=w800" class="panel-bg" alt="La Sfida Kore_ai">
-        </div>
-
-        <div class="reel-panel">
-            <div class="panel-content">
-                <div class="panel-num">02</div>
-                <h2>Wi-Fi e messaggi personalizzati.</h2>
-                <p>Una relazione diretta e senza sforzo per il tuo locale.</p>
-            </div>
-            <img src="https://lh3.googleusercontent.com/pw/AP1GczO2v2w2v2w2v2w2v2w2v2w2v2w2v2w2v2w2v2w2v2w2v2w2=w800" class="panel-bg" alt="La Connessione Kore_ai">
-        </div>
-
-        <div class="reel-panel">
-            <div class="panel-content">
-                <div class="panel-num">03</div>
-                <h2>Aumenta il fatturato. <span>+€1,850/settimana di potenziale.</span></h2>
-                <p>Monitora i ritorni e ottimizza il tuo investimento.</p>
-            </div>
-            <img src="hero.jpg" class="panel-bg" alt="Il Risultato Kore_ai">
-        </div>
-
-        <div class="reel-panel panel-cta">
-            <div class="panel-content" style="background: transparent; border: none; box-shadow: none;">
-                <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Scarica la checklist gratuita.</h2>
-                <p style="margin-bottom: 25px;">Per ristoratori di successo. Il tuo momento.</p>
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczN_N7v2N_N7fN7tN7N7tN7p=w800" style="max-width: 200px; margin-bottom: 20px;" alt="CTA Kore_ai">
-            </div>
-        </div>
-
+        <!-- Scheda 2 -->
+        <img src="scheda2.jpg" alt="Kore_ai - Trasforma il Wi-Fi">
+        
+        <!-- Scheda 3: Cliccabile ovunque (anche sul rettangolo grafico WhatsApp) -->
+        <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
+            <img src="scheda3.jpg" alt="Kore_ai - Richiedi info su WhatsApp">
+        </a>
     </div>
 
-    <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="floating-cta" target="_blank">
-        💬 SCRIVICI SU WHATSAPP
+    <!-- Pulsante WhatsApp Fisso Fluttuante -->
+    <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="whatsapp-float" target="_blank">
+        💬 RICHIEDI INFO SU WHATSAPP
     </a>
 
 </body>
