@@ -13,7 +13,6 @@
             height: 100vh;
         }
 
-        /* Contenitore principale a scorrimento orizzontale */
         .carousel-container {
             display: flex;
             width: 100vw;
@@ -50,13 +49,13 @@
             display: block;
         }
 
-        /* Stile base dei Pallini di Navigazione */
+        /* Pallini di Navigazione */
         .nav-dot {
             position: fixed;
             bottom: 30px;
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.2);
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
@@ -64,7 +63,7 @@
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
@@ -79,63 +78,31 @@
         .prev-dot {
             left: 20px;
             opacity: 0;
-            pointer-events: none; /* Nascosto nella prima scheda */
+            pointer-events: none;
         }
 
-        /* Pallino AVANTI (Basso a Destra) con Animazione Lampeggiante */
+        /* Pallino AVANTI (Basso a Destra) Lampeggiante */
         .next-dot {
             right: 20px;
             animation: pulseGlow 2s infinite ease-in-out;
         }
 
-        /* Effetto Lampeggiante / Pulsante */
         @keyframes pulseGlow {
             0% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.25);
             }
             50% {
-                transform: scale(1.08);
-                box-shadow: 0 0 15px 4px rgba(255, 255, 255, 0.6);
-                background: rgba(255, 255, 255, 0.45);
+                transform: scale(1.1);
+                box-shadow: 0 0 18px 5px rgba(255, 255, 255, 0.6);
+                background: rgba(255, 255, 255, 0.5);
             }
             100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-                background: rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.25);
             }
-        }
-
-        /* Pulsante WhatsApp - Visibile SOLO sull'ultima scheda */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: #25D366;
-            color: #000;
-            font-weight: bold;
-            font-size: 1.1rem;
-            text-align: center;
-            padding: 16px;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .whatsapp-float.visible {
-            opacity: 1;
-            pointer-events: auto;
         }
     </style>
 </head>
@@ -152,7 +119,7 @@
             <img src="Scheda2.jpg" alt="Scheda 2">
         </div>
         
-        <!-- Scheda 3: Cliccabile verso WhatsApp -->
+        <!-- Scheda 3: L'intera immagine (compreso il suo tasto verde) apre WhatsApp -->
         <div class="slide" id="slide3">
             <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
                 <img src="Scheda3.jpg" alt="Scheda 3">
@@ -163,28 +130,22 @@
     <!-- Pallino INDIETRO (Sinistra) -->
     <div class="nav-dot prev-dot" id="prevBtn" onclick="prevSlide()">➔</div>
 
-    <!-- Pallino AVANTI (Destra, Lampeggiante) -->
+    <!-- Pallino AVANTI (Destra) -->
     <div class="nav-dot next-dot" id="nextBtn" onclick="nextSlide()">➔</div>
-
-    <!-- Pulsante WhatsApp (Appare solo sulla 3a scheda) -->
-    <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="whatsapp-float" id="waBtn" target="_blank">
-        💬 RICHIEDI INFO SU WHATSAPP
-    </a>
 
     <script>
         const carousel = document.getElementById('carousel');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const waBtn = document.getElementById('waBtn');
         
-        // Ruota l'icona della freccia a sinistra per il tasto indietro
+        // Ruota la freccia verso sinistra per l'indietro
         prevBtn.style.transform = "rotate(180deg)";
 
         let currentSlide = 0;
         const totalSlides = 3;
 
         function updateUI() {
-            // Gestione visibilità tasto Indietro
+            // Mostra tasto Indietro solo se siamo alla scheda 2 o 3
             if (currentSlide > 0) {
                 prevBtn.style.opacity = "1";
                 prevBtn.style.pointerEvents = "auto";
@@ -193,15 +154,13 @@
                 prevBtn.style.pointerEvents = "none";
             }
 
-            // Gestione visibilità tasto Avanti e Barra WhatsApp nell'ultima scheda
+            // Mostra tasto Avanti solo nelle prime due schede
             if (currentSlide === totalSlides - 1) {
                 nextBtn.style.opacity = "0";
                 nextBtn.style.pointerEvents = "none";
-                waBtn.classList.add('visible');
             } else {
                 nextBtn.style.opacity = "1";
                 nextBtn.style.pointerEvents = "auto";
-                waBtn.classList.remove('visible');
             }
         }
 
@@ -227,7 +186,6 @@
             updateUI();
         }
 
-        // Rileva lo scorrimento/swipe con il dito
         carousel.addEventListener('scroll', () => {
             const index = Math.round(carousel.scrollLeft / window.innerWidth);
             if (index !== currentSlide) {
@@ -236,7 +194,6 @@
             }
         });
 
-        // Inizializza stato UI
         updateUI();
     </script>
 
