@@ -8,29 +8,24 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #0e0f12; overflow-x: hidden; }
 
-        /* Contenitore delle 3 immagini */
         .landing-container {
             width: 100%;
-            max-width: 500px; /* Dimensione ottimale mobile */
+            max-width: 500px;
             margin: 0 auto;
-            padding-bottom: 90px; /* Spazio per evitare sovrapposizioni in basso */
+            padding-bottom: 90px;
         }
 
-        /* Immagini trasparenti e fluide */
         .landing-container img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Rendiamo la 3a immagine un unico blocco cliccabile */
         .clickable-card {
             display: block;
             text-decoration: none;
-            cursor: pointer;
         }
 
-        /* Pulsante WhatsApp Fisso Sempre Visibile in Basso */
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -40,7 +35,7 @@
             max-width: 400px;
             background-color: #25D366;
             color: #000;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
@@ -59,19 +54,16 @@
 <body>
 
     <div class="landing-container">
-        <!-- Scheda 1 -->
-        <img src="scheda1.jpg" alt="Kore_ai - Riempi i tavoli vuoti">
+        <!-- Notare la 'S' maiuscola nei nomi dei file per combaciare con i tuoi file -->
+        <img src="Scheda1.jpg" alt="Scheda 1">
+        <img src="Scheda2.jpg" alt="Scheda 2">
         
-        <!-- Scheda 2 -->
-        <img src="scheda2.jpg" alt="Kore_ai - Trasforma il Wi-Fi">
-        
-        <!-- Scheda 3: Cliccabile ovunque (anche sul rettangolo grafico WhatsApp) -->
         <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
-            <img src="scheda3.jpg" alt="Kore_ai - Richiedi info su WhatsApp">
+            <img src="Scheda3.jpg" alt="Scheda 3">
         </a>
     </div>
 
-    <!-- Pulsante WhatsApp Fisso Fluttuante -->
+    <!-- Pulsante WhatsApp Fisso -->
     <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="whatsapp-float" target="_blank">
         💬 RICHIEDI INFO SU WHATSAPP
     </a>
