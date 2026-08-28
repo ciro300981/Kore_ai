@@ -3,29 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kore_ai | Phygital Automation per Ristoranti</title>
+    <title>Kore_ai | Phygital Automation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0e0f12; overflow-x: hidden; }
-
-        .landing-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding-bottom: 90px;
+        body { 
+            background-color: #0e0f12; 
+            overflow: hidden; /* Blocca lo scorrimento verticale della pagina */
+            font-family: Arial, sans-serif;
+            height: 100vh;
         }
 
-        .landing-container img {
+        /* Contenitore principale a scorrimento orizzontale (snap) */
+        .carousel-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Nasconde la barra di scorrimento su tutti i browser */
+        .carousel-container::-webkit-scrollbar { display: none; }
+        .carousel-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Ogni singola scheda occupa l'intero schermo */
+        .slide {
+            flex: 0 0 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            object-fit: contain; /* Adatta l'immagine senza tagliarla */
+            background-color: #0e0f12;
         }
 
         .clickable-card {
+            width: 100%;
+            height: 100%;
             display: block;
-            text-decoration: none;
         }
 
+        /* Pallino discreto semi-trasparente in basso a destra per andare avanti */
+        .next-dot {
+            position: absolute;
+            right: 20px;
+            bottom: 110px; /* Posizionato poco sopra il pulsante WhatsApp */
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .next-dot:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Pulsante WhatsApp Fisso in Basso */
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -35,7 +89,6 @@
             max-width: 400px;
             background-color: #25D366;
             color: #000;
-            font-family: Arial, sans-serif;
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
@@ -47,26 +100,56 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="landing-container">
-        <!-- Notare la 'S' maiuscola nei nomi dei file per combaciare con i tuoi file -->
-        <img src="Scheda1.jpg" alt="Scheda 1">
-        <img src="Scheda2.jpg" alt="Scheda 2">
+    <div class="carousel-container" id="carousel">
+        <!-- Scheda 1 -->
+        <div class="slide" id="slide1">
+            <img src="Scheda1.jpg" alt="Scheda 1">
+        </div>
         
-        <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
-            <img src="Scheda3.jpg" alt="Scheda 3">
-        </a>
+        <!-- Scheda 2 -->
+        <div class="slide" id="slide2">
+            <img src="Scheda2.jpg" alt="Scheda 2">
+        </div>
+        
+        <!-- Scheda 3: Cliccabile verso WhatsApp -->
+        <div class="slide" id="slide3">
+            <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
+                <img src="Scheda3.jpg" alt="Scheda 3">
+            </a>
+        </div>
     </div>
 
-    <!-- Pulsante WhatsApp Fisso -->
+    <!-- Pallino discreto in basso a destra per scorrere -->
+    <div class="next-dot" id="dotBtn" onclick="nextSlide()">➔</div>
+
+    <!-- Pulsante WhatsApp Fisso sempre visibile -->
     <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="whatsapp-float" target="_blank">
         💬 RICHIEDI INFO SU WHATSAPP
     </a>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const dotBtn = document.getElementById('dotBtn');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % 3;
+            carousel.scrollTo({
+                left: currentSlide * window.innerWidth,
+                behavior: 'smooth'
+            });
+        }
+
+        // Rileva lo swipe manuale dell'utente per aggiornare il tracciamento della slide
+        carousel.addEventListener('scroll', () => {
+            currentSlide = Math.round(carousel.scrollLeft / window.innerWidth);
+        });
+    </script>
 
 </body>
 </html>
