@@ -130,10 +130,9 @@
 </head>
 <body>
 
-    <!-- Traccia audio Jazz di sottofondo stabile -->
+    <!-- Traccia audio Smooth Jazz / Sax Soft pulita -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" type="audio/ogg">
-        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=smooth-acoustics-11158.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Pallino Musica in alto a destra -->
@@ -174,6 +173,7 @@
         const bgMusic = document.getElementById('bgMusic');
         
         prevBtn.style.transform = "rotate(180deg)";
+        bgMusic.volume = 0.4; // Volume raffinato e soft al 40%
 
         let currentSlide = 0;
         const totalSlides = 3;
