@@ -130,23 +130,29 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=smooth-acoustics-11158.mp3" type="audio/mpeg">
+    <!-- Traccia audio Jazz di sottofondo stabile -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" type="audio/ogg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="music-dot" id="musicBtn" onclick="toggleMusic()" title="Attiva musica jazz">
+    <!-- Pallino Musica in alto a destra -->
+    <div class="music-dot" id="musicBtn" onclick="toggleMusic()" title="Attiva/Disattiva musica">
         🎵
     </div>
 
     <div class="carousel-container" id="carousel">
+        <!-- Scheda 1 -->
         <div class="slide" id="slide1">
             <img src="Scheda1.jpg" alt="Scheda 1">
         </div>
         
+        <!-- Scheda 2 -->
         <div class="slide" id="slide2">
             <img src="Scheda2.jpg" alt="Scheda 2">
         </div>
         
+        <!-- Scheda 3: Cliccabile verso WhatsApp -->
         <div class="slide" id="slide3">
             <a href="https://wa.me/393345946100?text=Ciro%20mandami%20più%20info" class="clickable-card" target="_blank">
                 <img src="Scheda3.jpg" alt="Scheda 3">
@@ -154,8 +160,10 @@
         </div>
     </div>
 
+    <!-- Pallino INDIETRO (Sinistra) -->
     <div class="nav-dot prev-dot" id="prevBtn" onclick="prevSlide()">➔</div>
 
+    <!-- Pallino AVANTI (Destra) -->
     <div class="nav-dot next-dot" id="nextBtn" onclick="nextSlide()">➔</div>
 
     <script>
@@ -170,19 +178,19 @@
         let currentSlide = 0;
         const totalSlides = 3;
 
-        // Gestione attivazione/disattivazione musica al click sul pallino
+        // Gestione attivazione/disattivazione musica con cambio icona (muto/sbarra)
         function toggleMusic() {
             if (bgMusic.paused) {
                 bgMusic.play().then(() => {
                     musicBtn.classList.add('playing');
                     musicBtn.innerHTML = "🎶";
                 }).catch(e => {
-                    console.log("Riproduzione audio bloccata dal browser", e);
+                    console.log("Riproduzione audio bloccata", e);
                 });
             } else {
                 bgMusic.pause();
                 musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = "🎵";
+                musicBtn.innerHTML = "🔇"; // Icona con sbarra/muto
             }
         }
 
