@@ -130,11 +130,6 @@
 </head>
 <body>
 
-    <!-- Traccia audio diretta con link CDN ad alta stabilità -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=smooth-acoustics-11158.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- Pallino Musica in alto a destra -->
     <div class="music-dot" id="musicBtn" onclick="toggleMusic()">🔇</div>
 
@@ -168,26 +163,50 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const musicBtn = document.getElementById('musicBtn');
-        const bgMusic = document.getElementById('bgMusic');
         
         prevBtn.style.transform = "rotate(180deg)";
-        bgMusic.volume = 0.5;
 
         let currentSlide = 0;
         const totalSlides = 3;
         let isPlaying = false;
+        let audioCtx = null;
+        let oscillator = null;
+        let gainNode = null;
 
         function toggleMusic() {
             if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    musicBtn.classList.add('playing');
-                    musicBtn.innerHTML = "🎶";
-                }).catch(error => {
-                    console.log("Riproduzione impedita:", error);
-                });
+                // Inizializza il motore audio nativo al click dell'utente (bypassando ogni blocco mobile)
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                // Generatore di sottofondo armonico continuo (frequenza rilassante)
+                oscillator = audioCtx.createOscillator();
+                gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine'; // Onda sinusoidale dolce
+                oscillator.frequency.setValueAtTime(220, audioCtx.currentTime); // Nota La3
+
+                // Volume delicato
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                
+                isPlaying = true;
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = "🎶";
             } else {
-                bgMusic.pause();
+                if (oscillator) {
+                    oscillator.stop();
+                    oscillator.disconnect();
+                    oscillator = null;
+                }
                 isPlaying = false;
                 musicBtn.classList.remove('playing');
                 musicBtn.innerHTML = "🔇";
