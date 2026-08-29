@@ -130,14 +130,13 @@
 </head>
 <body>
 
-    <!-- Traccia audio con link alternativo ad altissima compatibilità mobile -->
+    <!-- Traccia audio diretta con link CDN ad alta stabilità -->
     <audio id="bgMusic" loop>
-        <source src="https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonfire.ogg" type="audio/ogg">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=smooth-acoustics-11158.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Pallino Musica in alto a destra -->
-    <div class="music-dot" id="musicBtn" onclick="toggleMusic()">🎵</div>
+    <div class="music-dot" id="musicBtn" onclick="toggleMusic()">🔇</div>
 
     <div class="carousel-container" id="carousel">
         <!-- Scheda 1 -->
@@ -176,27 +175,20 @@
 
         let currentSlide = 0;
         const totalSlides = 3;
+        let isPlaying = false;
 
         function toggleMusic() {
-            // Se la musica è in pausa o ferma, proviamo a riprodurla
-            if (bgMusic.paused) {
-                let playPromise = bgMusic.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        // Riproduzione avviata con successo
-                        musicBtn.classList.add('playing');
-                        musicBtn.innerHTML = "🎶";
-                    }).catch(error => {
-                        // Se il browser blocca, forziamo lo stato muto
-                        console.log("Errore riproduzione:", error);
-                        musicBtn.classList.remove('playing');
-                        musicBtn.innerHTML = "🔇";
-                    });
-                }
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.innerHTML = "🎶";
+                }).catch(error => {
+                    console.log("Riproduzione impedita:", error);
+                });
             } else {
-                // Se stava suonando, la mettiamo in pausa
                 bgMusic.pause();
+                isPlaying = false;
                 musicBtn.classList.remove('playing');
                 musicBtn.innerHTML = "🔇";
             }
