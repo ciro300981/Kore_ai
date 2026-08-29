@@ -50,7 +50,7 @@
             display: block;
         }
 
-        /* Pallini di Navigazione (Avanti/Indietro) */
+        /* Pallini di Navigazione */
         .nav-dot {
             position: fixed;
             bottom: 30px;
@@ -130,15 +130,14 @@
 </head>
 <body>
 
-    <!-- Traccia audio Smooth Jazz / Sax Soft pulita -->
-    <audio id="bgMusic" loop preload="auto">
+    <!-- Traccia audio con link alternativo ad altissima compatibilità mobile -->
+    <audio id="bgMusic" loop>
+        <source src="https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonfire.ogg" type="audio/ogg">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=smooth-acoustics-11158.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Pallino Musica in alto a destra -->
-    <div class="music-dot" id="musicBtn" onclick="toggleMusic()" title="Attiva/Disattiva musica">
-        🎵
-    </div>
+    <div class="music-dot" id="musicBtn" onclick="toggleMusic()">🎵</div>
 
     <div class="carousel-container" id="carousel">
         <!-- Scheda 1 -->
@@ -173,24 +172,33 @@
         const bgMusic = document.getElementById('bgMusic');
         
         prevBtn.style.transform = "rotate(180deg)";
-        bgMusic.volume = 0.4; // Volume raffinato e soft al 40%
+        bgMusic.volume = 0.5;
 
         let currentSlide = 0;
         const totalSlides = 3;
 
-        // Gestione attivazione/disattivazione musica con cambio icona (muto/sbarra)
         function toggleMusic() {
+            // Se la musica è in pausa o ferma, proviamo a riprodurla
             if (bgMusic.paused) {
-                bgMusic.play().then(() => {
-                    musicBtn.classList.add('playing');
-                    musicBtn.innerHTML = "🎶";
-                }).catch(e => {
-                    console.log("Riproduzione audio bloccata", e);
-                });
+                let playPromise = bgMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Riproduzione avviata con successo
+                        musicBtn.classList.add('playing');
+                        musicBtn.innerHTML = "🎶";
+                    }).catch(error => {
+                        // Se il browser blocca, forziamo lo stato muto
+                        console.log("Errore riproduzione:", error);
+                        musicBtn.classList.remove('playing');
+                        musicBtn.innerHTML = "🔇";
+                    });
+                }
             } else {
+                // Se stava suonando, la mettiamo in pausa
                 bgMusic.pause();
                 musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = "🔇"; // Icona con sbarra/muto
+                musicBtn.innerHTML = "🔇";
             }
         }
 
